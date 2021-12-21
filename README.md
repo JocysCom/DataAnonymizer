@@ -35,7 +35,7 @@ To install scripts and data, just open *.sql files with SQL Management Studio in
 
 Example 1 - getting random names.
 
-```T-SQL
+``` SQL
 -- Parameters @skip, @take, @randomized
 -- Skip 50 random names, take next 100 and use randomized order (1).
 EXEC [Anonymous].[GetRandomNames] 50, 100, 1
@@ -43,7 +43,7 @@ EXEC [Anonymous].[GetRandomNames] 50, 100, 1
 
 Example 2 - Anonymizing table:
 
-```T-SQL
+``` SQL
 -- Declare properties to store number of available names.
 DECLARE @first_name_max int, @last_name_max int
 
