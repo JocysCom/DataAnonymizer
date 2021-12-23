@@ -29,9 +29,9 @@ To install scripts and data, just open *.sql files with "Microsoft SQL Managemen
 [Anonymous].[FirstName] Table
 
 <table>
-<th>Id</th><th>Name</th><th>Type</th><th>Rate</th><th>Total</th><th>Order</th>
-<td>BIGINT</td><td>VARCHAR(20)</td><td>VARCHAR(1)</td><td>INT</td><td>INT</td><td>INT</td>
-<td>Identity</td><td>First Name</td><td>Gender: (M)ale, (F)emale, (N)eutral</td><td>INT</td><td>INT</td><td>INT</td>
+<tr><th>Id</th><th>Name</th><th>Type</th><th>Rate</th><th>Total</th><th>Order</th></tr>
+<tr><td>BIGINT</td><td>VARCHAR(20)</td><td>VARCHAR(1)</td><td>INT</td><td>INT</td><td>INT</td></tr>
+<tr><td>Identity</td><td>First Name</td><td>Gender: (M)ale, (F)emale, (N)eutral</td><td>INT</td><td>INT</td><td>INT</td></tr>
 </table>
 
 
