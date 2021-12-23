@@ -38,7 +38,8 @@ SELECT @last_name_max  = COUNT(*) FROM [Anonymous].[LastName]
 -- Anonymise...
 UPDATE p SET
 	p.first_name = afn.[Name],
-	p.last_name  = aln.[Name]
+	p.last_name  = aln.[Name],
+	p.email = CONCAT(afn.[Name], '.', aln.[Name], '@company.com')
 FROM [profile] p
 -- Pick anonymous first name and last name by id. Skip 100 000 anonymous names.
 INNER JOIN [Anonymous].[FirstName] afn ON afn.[Order] = [Anonymous].[GetFirstNameIdByIndex](p.id + 100000, @first_name_max)
