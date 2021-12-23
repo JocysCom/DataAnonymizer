@@ -1,7 +1,8 @@
-# DataAnonymizer
-Anonymizing scripts, which allows to anonymize names or generate 5 085 974 971 unique and anonymous first/last name combinations.
+# Jocys.com Data Anonymizer
 
 Anonymizing scripts, which allows to anonymize names or generate 5 085 974 971 unique and anonymous first/last name combinations.
+
+
 
 Anonymizing scrips use public databases from "National Records of Scotland" and "US Social Security Agency". It contains 31 339 first names and 162 289 last names. It allows to generate 5 085 974 971 unique and anonymous  first/last name combinations.
 To install scripts and data, just open *.sql files with SQL Management Studio in specified order and execute them on target database:
