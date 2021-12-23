@@ -24,6 +24,18 @@ To install scripts and data, just open *.sql files with "Microsoft SQL Managemen
 8. <b>Anonymous.GetFirstNameIdByIndex.sql</b> - Scalar Function. Returns Id value of [FirstName] table by index. See example below.
 9. <b>Anonymous.GetLastNameIdByIndex.sql</b> - Scalar Function. Returns Id value of [LastName] table by index. See example below.
 
+## Data
+
+[Anonymous].[FirstName] Table
+
+<table>
+<th>Id</th><th>Name</th><th>Type</th><th>Rate</th><th>Total</th><th>Order</th>
+<td>BIGINT</td><td>VARCHAR(20)</td><td>VARCHAR(1)</td><td>INT</td><td>INT</td><td>INT</td>
+<td>Identity</td><td>First Name</td><td>Gender: (M)ale, (F)emale, (N)eutral</td><td>INT</td><td>INT</td><td>INT</td>
+</table>
+
+
+
 ## Examples
 
 Example 1 - getting random names.
