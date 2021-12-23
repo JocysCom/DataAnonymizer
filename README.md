@@ -26,7 +26,7 @@ To install scripts and data, just open *.sql files with "Microsoft SQL Managemen
 
 ## Data
 
-[Anonymous].[FirstName] and [Anonymous].[LastName] Table
+Structure of [Anonymous].[FirstName] and [Anonymous].[LastName] table:
 
 <table>
 	<tr><th>Column</th><th>Type</th><th>Description</th></tr>
