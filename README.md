@@ -1,10 +1,10 @@
 # Jocys.com Data Anonymizer
 
-Anonymizing scripts, which allows to anonymize names or generate 5 085 974 971 unique and anonymous first/last name combinations.
+Anonymizing scripts for SQL Database, which allows to anonymize names or generate 5 085 974 971 unique and anonymous first/last name combinations.
 
 ## Why this tool is usefull?
 
-Tool helps to create TEST and DEV environment from LIVE, which looks real.
+You can create TEST and DEV environment from LIVE environment.
 
 ## Data Source
 
