@@ -26,16 +26,16 @@ To install scripts and data, just open *.sql files with "Microsoft SQL Managemen
 
 ## Data
 
-[Anonymous].[FirstName] Table
+[Anonymous].[FirstName] and [Anonymous].[LastName] Table
 
 <table>
 	<tr><th>Column</th><th>Type</th><th>Description</th></tr>
 	<tr><td>Id</td><td>BIGINT</td><td>Identity</td></tr>
 	<tr><td>Name</td><td>VARCHAR(20)</td><td>First/Last Name</td></tr>
-	<tr><td>Type</td><td>VARCHAR(1)</td><td>M - Male, F - Female, N - Neutral</td></tr>
-	<tr><td>Rate</td><td>INT</td><td>Popularity rating. Heigher value - more popular.</td></tr>
-	<tr><td>Total</td><td>INT</td><td>Number of people with the name.</tr>
-	<tr><td>Order</td><td>INT</td><td>Randomized popularity order in batches of 1000.</td></tr>
+	<tr><td>Type</td><td>VARCHAR(1)</td><td>M - Male Name, F - Female Name, S - Surname</td></tr>
+	<tr><td>Rate</td><td>INT</td><td>Popularity rating. Heigher value - more popular</td></tr>
+	<tr><td>Total</td><td>INT</td><td>Number of people with the name</tr>
+	<tr><td>Order</td><td>INT</td><td>Randomized popularity order in batches of 1000</td></tr>
 </table>
 
 ## Examples
