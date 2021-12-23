@@ -8,7 +8,7 @@ You can create TEST and DEV environment from LIVE environment.
 
 ## Data Source
 
-Names were merged from "National Records of Scotland" and "US Social Security Agency". It contains 31 339 first names and 162 289 last names.
+Data tables were created by merging public "National Records of Scotland" and "US Social Security Agency". It contains 31 339 first names and 162 289 last names.
 
 ## Installation
 
