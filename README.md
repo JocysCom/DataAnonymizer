@@ -2,10 +2,17 @@
 
 Anonymizing scripts, which allows to anonymize names or generate 5 085 974 971 unique and anonymous first/last name combinations.
 
+## Why this tool is usefull?
 
+Tool helps to create TEST and DEV environment from LIVE, which looks real.
 
-Anonymizing scrips use public databases from "National Records of Scotland" and "US Social Security Agency". It contains 31 339 first names and 162 289 last names. It allows to generate 5 085 974 971 unique and anonymous  first/last name combinations.
-To install scripts and data, just open *.sql files with SQL Management Studio in specified order and execute them on target database:
+## Data Source
+
+Names were merged from "National Records of Scotland" and "US Social Security Agency". It contains 31 339 first names and 162 289 last names.
+
+## Installation
+
+To install scripts and data, just open *.sql files with "Microsoft SQL Management Studio" in specified order and execute them on target database:
 
 1. <b>Anonymous.FirstName.csv</b> - First Name records.
 2. <b>Anonymous.LastName.csv</b> - Last Name records.
@@ -16,6 +23,8 @@ To install scripts and data, just open *.sql files with SQL Management Studio in
 7. <b>Anonymous.GetRandomNames.sql</b> - Stored Procedure. Generates table of unique anonymous first and last names. See example below.
 8. <b>Anonymous.GetFirstNameIdByIndex.sql</b> - Scalar Function. Returns Id value of [FirstName] table by index. See example below.
 9. <b>Anonymous.GetLastNameIdByIndex.sql</b> - Scalar Function. Returns Id value of [LastName] table by index. See example below.
+
+## Examples
 
 Example 1 - getting random names.
 
