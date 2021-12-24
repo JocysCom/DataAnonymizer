@@ -76,4 +76,5 @@ You can use "HMAC Implementation for Microsoft SQL Server" in order to derive an
 https://github.com/JocysCom/ShellScripts/tree/master/Tester/Scripts/HMAC_for_SQL
 
 - <b>Security.HMAC</b> - Implements HMAC algorithm. Supported and tested algorithms: MD2, MD4, MD5, SHA, SHA1, SHA2_256, SHA2_512.
-- <b>Security.HashPassword</b> - Returns base64 string which contains random salt and password hash inside. Use SHA-256 alg
+- <b>Security.HashPassword</b> - Returns base64 string which contains random salt and password hash inside. Use SHA-256 algorithm.
+- <b>Security.IsValidPassword</b> - Returns 1 if base64 string and password match. Use SHA-256 algorithm.
