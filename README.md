@@ -12,7 +12,7 @@ Data tables were created by merging public "National Records of Scotland" and "U
 
 ## Installation
 
-To install scripts and data, just open *.sql files with "Microsoft SQL Management Studio" in specified order and execute them on target database:
+To install scripts and data, just open Data\*.sql files with "Microsoft SQL Management Studio" in specified order and execute them on target database:
 
 1. <b>Anonymous.FirstName.csv</b> - First Name records.
 2. <b>Anonymous.LastName.csv</b> - Last Name records.
