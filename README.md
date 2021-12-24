@@ -68,3 +68,12 @@ FROM [profile] p
 INNER JOIN [Anonymous].[FirstName] afn ON afn.[Order] = [Anonymous].[GetFirstNameIdByIndex](p.id + 100000, @first_name_max)
 INNER JOIN [Anonymous].[LastName]  aln ON aln.[Order] = [Anonymous].[GetLastNameIdByIndex](p.id + 100000, @last_name_max)
 ```
+
+## Anonymizing Passwords and PINs
+
+You can use "HMAC Implementation for Microsoft SQL Server" in order to derive anonymized passwords and PINs:
+
+https://github.com/JocysCom/ShellScripts/tree/master/Tester/Scripts/HMAC_for_SQL
+
+- <b>Security.HMAC</b> - Implements HMAC algorithm. Supported and tested algorithms: MD2, MD4, MD5, SHA, SHA1, SHA2_256, SHA2_512.
+- <b>Security.HashPassword</b> - Returns base64 string which contains random salt and password hash inside. Use SHA-256 alg
