@@ -24,6 +24,25 @@ To install scripts and data, just open Data\*.sql files with "Microsoft SQL Mana
 8. <b>Anonymous.GetFirstNameIdByIndex.sql</b> - Scalar Function. Returns Id value of [FirstName] table by index. See example below.
 9. <b>Anonymous.GetLastNameIdByIndex.sql</b> - Scalar Function. Returns Id value of [LastName] table by index. See example below.
 
+### Database Objects
+
+<pre>
+DB
+├───Functions
+│   ├───Anonymous.GetFirstNameIdByIndex
+│   └───Anonymous.GetLastNameIdByIndex
+├───Stored Procedures
+│   ├───Anonymous.GetRandomNames
+│   ├───Anonymous.RandomizeFirstNameOrder
+│   └───Anonymous.RandomizeLastNameOrder
+├───Tables
+│   ├───Anonymous.FirstName
+│   └───Anonymous.LastName
+└───Security
+    └───Schemas
+	└───Anonymous
+</pre>
+	
 ## Data
 
 Structure of [Anonymous].[FirstName] and [Anonymous].[LastName] table:
