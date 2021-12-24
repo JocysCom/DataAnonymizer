@@ -39,7 +39,7 @@ Structure of [Anonymous].[FirstName] and [Anonymous].[LastName] table:
 </table>
 
 ## Examples
- (
+
 Example 1 - getting random names.
 
 ``` SQL
