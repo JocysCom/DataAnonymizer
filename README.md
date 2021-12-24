@@ -39,8 +39,7 @@ DB
 │   ├───Anonymous.FirstName
 │   └───Anonymous.LastName
 └───Security
-    └───Schemas
-	└───Anonymous
+    └───Anonymous
 </pre>
 	
 ## Data
