@@ -4,7 +4,7 @@ Anonymizing scripts for SQL Database, which allows to anonymize names or generat
 
 ## Why this tool is usefull?
 
-You can create TEST and DEV environment from LIVE environment. You can assign anonymouse names by ID, which allows to create TEST and DEV databases with the same anonymouse users.
+You can create TEST and DEV database environment from LIVE database. You can derive anonymous names from ID, which allows to create TEST and DEV databases with the same anonymous users.
 
 ## Data Source
 
