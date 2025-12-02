@@ -9,7 +9,7 @@ IF OBJECT_ID('[Anonymous].[GetLastNameIdByIndex]', 'FN') IS NOT NULL
 GO
 
 CREATE FUNCTION [Anonymous].[GetLastNameIdByIndex](
-	@index int, @max int
+	@index bigint, @max int
 ) RETURNS INT AS
 BEGIN
 	/*
@@ -20,7 +20,7 @@ BEGIN
 	SELECT [Anonymous].[GetLastNameIdByIndex](1, @max)
 	*/
 	-- Make index 1 based
-	DECLARE @i int = @index + @max - 1
+	DECLARE @i bigint = @index + @max - 1
 	-- Get last name index by id. Most popular names will be on the top.
 	RETURN (@i + (@index / @max)) % @max + 1
 END

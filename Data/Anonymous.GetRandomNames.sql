@@ -8,9 +8,9 @@ IF OBJECT_ID('[Anonymous].[GetRandomNames]', 'P') IS NOT NULL
   DROP PROCEDURE [Anonymous].[GetRandomNames]
 GO
 
-CREATE PROCEDURE [Anonymous].[GetRandomNames] 
-	@skip int,
-	@take int,
+CREATE PROCEDURE [Anonymous].[GetRandomNames]
+	@skip bigint,
+	@take bigint,
 	@randomized bit = 0
 AS
 
@@ -49,11 +49,11 @@ DECLARE
 	@l int = 1,
 	@fmax int = @first_name_max_id,
 	@lmax int = @last_name_max_id,
-	@t int = @skip,
+	@t bigint = @skip,
 	@fi int,
 	@li int
 
-DECLARE @tmp_table AS TABLE (id int PRIMARY KEY, f int, l int, d int)
+DECLARE @tmp_table AS TABLE (id bigint PRIMARY KEY, f int, l int, d int)
 
 -- Fill table with all posible variations.
 WHILE @l <= @lmax AND @t < (@skip + @take)

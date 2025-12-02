@@ -24,7 +24,7 @@ DECLARE
     @error sysname = '',
     @reported datetime = GETDATE()
 
-DECLARE @StartId int = 0
+DECLARE @StartId bigint = 0
 
 -- Select total records to complete.
 SELECT @total = COUNT(*)
@@ -37,7 +37,7 @@ DECLARE
     @start datetime,
     @size bigint = 1000 -- Batch size.
 
-DECLARE @Table as TABLE (id int PRIMARY KEY, [order] int)
+DECLARE @Table as TABLE (id bigint PRIMARY KEY, [order] int)
 
 WHILE @last <> 0 AND @total > 0
 BEGIN
@@ -48,9 +48,9 @@ BEGIN
     -- Do action here.
     -----------------------------------------------------------
     
-	DECLARE @LastId int
-	
-	DELETE @Table
+ DECLARE @LastId bigint
+ 
+ DELETE @Table
 
 	-- Get Ids to process.
 	INSERT INTO @Table(id, [order])
