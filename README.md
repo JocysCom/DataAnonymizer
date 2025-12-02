@@ -60,15 +60,15 @@ Structure of [Anonymous].[FirstName] and [Anonymous].[LastName] table:
 
 Example 1 - getting random names.
 
-``` SQL
+```SQL
 -- Parameters @skip, @take, @randomized
 -- Skip 50 random names, take next 100 and use randomized order (1).
 EXEC [Anonymous].[GetRandomNames] 50, 100, 1
 ```
 
-Example 2 - Anonymizing table:
+Example 2 - anonymizing table:
 
-``` SQL
+```SQL
 -- Declare properties to store number of available names.
 DECLARE @first_name_max int, @last_name_max int
 
@@ -86,6 +86,160 @@ FROM [profile] p
 INNER JOIN [Anonymous].[FirstName] afn ON afn.[Order] = [Anonymous].[GetFirstNameIdByIndex](p.id + 100000, @first_name_max)
 INNER JOIN [Anonymous].[LastName]  aln ON aln.[Order] = [Anonymous].[GetLastNameIdByIndex](p.id + 100000, @last_name_max)
 ```
+
+Example 3 - anonymizing very large table:
+```SQL
+/*
+Advantages of self-adjusting batch data processing script:
+
+	1. Script will process data in batches, which prevents long table locks.
+	   It allows to process very large amounts of data with minimized impact on the system.
+
+	2. Bach size will be auto-adjusted for best performance and execution time between 2 and 5 seconds.
+	   It starts from 1000 records at the time (look for @size parameter inside the script).
+	   Next batch size will be doubled if current batch action takes less than 2 seconds. 
+	   Next batch size will be halved  if current batch action takes more than 5 seconds.
+	   
+	3. Script will report progress every 5 seconds and when finished.
+
+	4. Batch execution time and wait time between batches can be adjusted.
+*/
+
+DECLARE
+	@first_name_max int,
+	@first_name_dif int = 0, -- Change number to start from different first name.
+	@last_name_max int,
+	@last_name_dif int = 256 -- Change number to start from different last name.
+
+SELECT @first_name_max = COUNT(*) FROM  [Anonymous].[FirstName]
+SELECT @last_name_max  = COUNT(*) FROM  [Anonymous].[LastName]
+
+---------------------------------------------------------------
+-- UPDATE the rows in a batches. This will minimize impact.
+---------------------------------------------------------------
+DECLARE
+    @last bigint = -1,
+    @done bigint = 0,
+    @total bigint = 0,
+    @error sysname = '',
+    @reported datetime = GETDATE()
+
+DECLARE @StartId bigint = 0
+
+---------------------------------------------------------------
+-- CUSTOMIZE: Select total records (required for percentage display).
+---------------------------------------------------------------
+SELECT @total = COUNT(*)
+FROM [Customer].[AccountContact] WITH(NOLOCK)
+WHERE 
+	-- Required: Start records from specific primary Id.
+	[Id] > @StartId
+	-- Optional: Exclude some records below if necessary.
+	AND [FirstName] <> 'Test' AND [AccountId] NOT IN (40000) 
+
+---------------------------------------------------------------
+
+SET @error = 'Total: ' + CAST(@total AS sysname)
+RAISERROR(@error, -1, -1) WITH NOWAIT
+
+DECLARE 
+    @start datetime,
+    @size bigint = 1000, -- Starting batch size.
+    @minTime int = 2, -- Increase batch size if less than this time (seconds).
+    @maxTime int = 5  -- Decrease batch size if more than this time (seconds).
+
+DECLARE @BatchIds as TABLE (Id bigint PRIMARY KEY)
+
+WHILE @last <> 0 AND @total > 0
+BEGIN
+    SET NOCOUNT ON
+
+    SET @start = GETDATE()
+
+	DELETE @BatchIds
+
+	--------------------------------------------------------------
+	-- CUSTOMIZE: Insert record IDs which must be updated.
+	--------------------------------------------------------------
+
+	INSERT INTO @BatchIds
+	SELECT TOP(@size) [Id]
+	FROM [Customer].[AccountContact]
+	WHERE
+		-- Required: Start records from specific primary Id.
+		[Id] > @StartId
+		-- Optional: Exclude some records below if necessary.
+		AND [FirstName] <> 'Test' AND [AccountId] NOT IN (40000) 
+	-- Make sure that results are ordered by Id.
+	ORDER BY [Id]
+
+	------------------------------
+	-- CUSTOMIZE: Do batch action here.
+    ------------------------------
+
+	---- Anonymise table...
+	UPDATE ac SET
+		-- Anonymise names and email.
+		ac.[FirstName]  = afn.[Name],
+		ac.[MiddleName] = '',
+		ac.[LastName]   = aln.[Name],
+		ac.[Email] = afn.[Name] + '.' + aln.[Name] + '@anonymous.com',
+		-- Anonymise other fields.
+		ac.[Phone] = '02012345678',
+		ac.[PhoneExtension] = '',
+		ac.[Mobile] = '07012345678',
+		ac.[Notes] = '',
+		ac.[Title] = ''
+	FROM [Customer].[AccountContact] ac
+	-- Process records listed in @BatchIds.
+	INNER JOIN @BatchIds bids ON bids.Id = ac.Id
+	-- Pick anonymous first name and last name by id.
+	INNER JOIN [Anonymous].[FirstName] afn ON afn.[Order] = [Anonymous].[GetFirstNameIdByIndex](ac.Id + @first_name_dif, @first_name_max)
+	INNER JOIN [Anonymous].[LastName]  aln ON aln.[Order] = [Anonymous].[GetLastNameIdByIndex](ac.Id + @last_name_dif, @last_name_max)
+	
+    -----------------------------------------------------------
+
+    -- Count selected rows.
+    SET @last = @@ROWCOUNT
+	-- Select record id for next time.
+	SELECT @StartId = MAX(Id) FROM @BatchIds
+	-- Count done records.
+	SET @done = @done + @last
+    
+    -----------------------------------------------------------
+    
+    -- Double batch size if execution was too quick.
+    IF DATEDIFF(SECOND, @start, GETDATE()) < @minTime
+        SET @size = @size * 2
+    -- Half batch size if execution was too slow.
+    IF DATEDIFF(SECOND, @start, GETDATE()) > @maxTime
+        SET @size = @size / 2
+
+    IF @size < 1 SET @size = 1
+         
+    -----------------------------------------------------------
+
+    -- Report when finished or every 5 seconds.
+    IF @last = 0 OR @last > 0 AND DATEDIFF(SECOND, @reported, GETDATE()) > 5
+    BEGIN
+        SET @reported = GETDATE()
+        SET @error =
+            FORMAT(@reported,'yyyy-MM-dd HH:mm:ss') +
+            ' | Done: '    + RIGHT(CAST('' AS CHAR(26)) + FORMAT(@done, '#,##0'), LEN(@total)) +
+            ' | Size: '    + RIGHT(CAST('' AS CHAR(26)) + FORMAT(@size, '#,##0'), LEN(@total)) +
+            ' | Last: '    + RIGHT(CAST('' AS CHAR(26)) + FORMAT(@last, '#,##0'), LEN(@total)) +
+            ' | Percent: ' + RIGHT(CAST('' AS CHAR(26)) + FORMAT(@done * 100 / CAST(@total AS money), '#,##0.00'), 7)
+        RAISERROR(@error, -1, -1) WITH NOWAIT
+    END
+    
+    -- Delay next action for 250 ms.
+    WAITFOR DELAY '00:00:00.250'
+    
+    SET NOCOUNT OFF
+
+END
+```
+
 
 ## Anonymizing Passwords and PINs
 
